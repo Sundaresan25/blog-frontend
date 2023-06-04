@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   blogManager,
+  clearState,
   getBlogs,
   getComments,
   updateComment,
@@ -424,7 +425,7 @@ export function Home() {
             <Button
               onClick={() => {
                 dispatch(logout);
-                navigate("/login");
+                dispatch(clearState());
               }}
               style={{ color: "white" }}
             >

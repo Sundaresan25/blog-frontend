@@ -92,8 +92,10 @@ export const CommonSlice = createSlice({
   name: "common",
   initialState,
   reducers: {
-    userSelector: (state, action) => {
-      state.userProfile = action.payload;
+    clearState: (state, action) => {
+      state.isLoggedIn = false;
+      state.userProfile = null;
+      state.sessionExpireTime = null;
     },
   },
   extraReducers(builder) {
@@ -189,6 +191,6 @@ export const CommonSlice = createSlice({
   },
 });
 
-export const { userSelector } = CommonSlice.actions;
+export const { clearState } = CommonSlice.actions;
 
 export default CommonSlice.reducer;

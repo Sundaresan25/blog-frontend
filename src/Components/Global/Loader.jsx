@@ -4,7 +4,7 @@ import React from "react";
 export const Loader = () => {
   return (
     <section className="loader">
-      <div className="backDrop">
+      <div className="backDrop" style={{ zIndex: 999999 }}>
         <div
           className="modalBox bg-white col-lg-2 col-md-4 col-10 text-center rounded p-2"
           style={{ zIndex: 999999 }}
