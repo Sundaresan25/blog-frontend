@@ -1,0 +1,182 @@
+/* import font from google */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap");
+
+body {
+  overflow-x: hidden;
+  background-color: #ffe6c9 !important;
+  font-family: "Nunito Sans", sans-serif !important;
+  min-height: 100vh;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+button:focus {
+  outline: 0;
+}
+
+/* popup style */
+.backDrop {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1218;
+}
+
+.modalBox {
+  position: fixed;
+  height: fit-content;
+  background: white;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.headText {
+  border-bottom: 1px solid #f0f0f0;
+  background: #73114b;
+  padding: 5px 15px;
+  color: white;
+}
+
+.inputText {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative;
+  border: none;
+}
+
+.inputText label {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.inputText select,
+.inputText input {
+  border: 2px solid #f0f0f0;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px;
+  width: 100%;
+}
+
+.inputText select:focus,
+.inputText input:focus {
+  outline: 0;
+  border-color: #777;
+}
+
+.inputField {
+  border-color: #777;
+}
+.inputField:focus {
+  border-color: #777;
+  box-shadow: 0 0 0 0.2rem #f0f0f0;
+}
+.errorStyle {
+  border-color: red;
+}
+.errorStyle:focus {
+  border-color: red;
+  box-shadow: 0 0 0 0.2rem #ff9494;
+}
+
+/* login style */
+.login-section * {
+  font-family: "Nunito Sans", sans-serif !important;
+}
+.login-section {
+  height: 100vh;
+  position: relative;
+  background: #fff;
+}
+
+.login-section .login-poster {
+  background: #ffe6c9;
+}
+
+.login-section .login-poster .title {
+  z-index: 110;
+  /* bottom: 1rem; */
+  margin: auto;
+  width: -webkit-fill-available;
+}
+.login-section .login-poster .title h2 {
+  color: #73114b;
+  font-family: "Raleway", sans-serif !important;
+
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.login-section .login-poster .title p {
+  color: #73114b;
+  font-family: "Raleway", sans-serif !important;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+.login-section .login-poster img {
+  z-index: 120;
+  margin: auto;
+  width: 100%;
+}
+.login-section .login-poster .circle2 {
+  left: -40%;
+  top: -5%;
+}
+
+.login-section .login-poster .circle3 {
+  right: -50%;
+  bottom: 0;
+}
+
+.login-section .login-poster .circle2,
+.login-section .login-poster .circle3 {
+  z-index: 110;
+}
+.login-section .loginForm {
+  width: 80%;
+}
+
+/* breadcrumb style */
+.breadCrumbCon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.breadcrumb {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.breadcrumb li {
+  margin-right: 5px;
+}
+
+.breadcrumb li:last-child {
+  font-weight: bold;
+}
+
+.breadcrumb li a {
+  text-decoration: none;
+  color: #333;
+}

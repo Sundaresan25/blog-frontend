@@ -1,0 +1,71 @@
+@font-face {
+  font-family: OpenSans;
+  font-weight: 400;
+  font-style: normal;
+  src: url("../fonts/OpenSans-Regular.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-weight: 700;
+  font-style: normal;
+  src: url("../fonts/OpenSans-Bold.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Montserrat;
+  font-style: normal;
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Montserrat-italic;
+  font-style: normal;
+  src: url("../fonts/Montserrat-Italic-VariableFont_wght.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Themify;
+  font-style: normal;
+  src: url("../fonts/themify.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: PwBrushMe;
+  font-style: normal;
+  src: url("../fonts/PwBrushMe.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Kollera;
+  font-style: normal;
+  src: url("../fonts/Kollera.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Sweetbloom;
+  font-style: normal;
+  src: url("../fonts/Sweetbloom.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: PlainJane;
+  font-style: normal;
+  src: url("../fonts/PlainJane.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: WhiteBold;
+  font-style: normal;
+  src: url("../fonts/WhiteBold.ttf");
+  font-display: swap;
+}
+@font-face {
+  font-family: Roadway;
+  font-style: normal;
+  src: url("../fonts/Roadway.ttf");
+  font-display: swap;
+}
