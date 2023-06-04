@@ -242,7 +242,7 @@ export function Blogs() {
           <div className="container bg-white rounded p-2">
             <div className="d-flex justify-content-end">
               <small className="text-muted ">
-                {formatDate(fullData?.created_at)}
+                {formatDate(fullData?.createdAt)}
               </small>
             </div>
             <h2 style={{ fontWeight: "500" }}>{fullData?.title}</h2>
@@ -269,7 +269,7 @@ export function Blogs() {
                       {details?.authorMail === userProfile?.email
                         ? "You"
                         : details?.author}{" "}
-                      ({formatDate(details?.created_at)})
+                      ({formatDate(details?.createdAt)})
                     </small>
                   </div>
                   <div>

@@ -3,7 +3,6 @@ import { login, logout } from "./LoginReducer";
 import * as authService from "../Services/auth";
 import { AdminServices } from "../Services/Services";
 import errorHandling from "../Services/errorHandling";
-import { customEncode } from "../Services/helpers";
 
 // Async thunk for initializing the session
 export const initializeSession = createAsyncThunk(

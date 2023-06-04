@@ -60,8 +60,9 @@ export function customDecode(str) {
  * @returns {string} - The formatted date and time string.
  */
 export function formatDate(dateTimeString) {
-  const formattedDateTime = moment(dateTimeString).format(
-    "MMMM Do, YYYY [at] h:mm:ss A"
-  );
+  console.log(dateTimeString, "test");
+  const formattedDateTime = moment(dateTimeString)
+    .local()
+    .format("MMMM Do, YYYY [at] h:mm:ss A");
   return formattedDateTime;
 }
