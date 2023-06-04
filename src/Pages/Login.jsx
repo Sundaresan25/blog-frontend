@@ -16,19 +16,22 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const LoginForm = (props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Importing useNavigate hook from React Router to handle navigation
+  const dispatch = useDispatch(); // Importing useDispatch hook from React Redux to dispatch actions
 
-  const { loading } = useSelector((state) => state.login);
+  const { loading } = useSelector((state) => state.login); // Retrieving the 'loading' state from the 'login' slice of the Redux store
 
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
-  });
-  const [showpassword, setShowpassword] = useState(false);
+  }); // Initializing state for login details
 
-  const [error, setError] = useState({});
+  const [showpassword, setShowpassword] = useState(false); // Initializing state for password visibility toggle
+
+  const [error, setError] = useState({}); // Initializing state for form errors
+
   function submitHandler() {
+    // Function to handle form submission
     if (
       loginDetails.email.length === 0 ||
       !loginDetails.email.match(emailReg)
@@ -37,21 +40,22 @@ export const LoginForm = (props) => {
     } else if (loginDetails.password.length === 0) {
       setError({ password: "Please Enter password" });
     } else {
-      dispatch(login(loginDetails))
+      dispatch(login(loginDetails)) // Dispatching the 'login' action with login details
         .unwrap()
         .then((res) => {
-          setError({});
-          navigate("/");
+          setError({}); // Clearing the form errors
+          navigate("/"); // Navigating to the home page upon successful login
         })
         .catch((error) => {
-          toast.error(error.message);
+          toast.error(error.message); // Displaying an error toast in case of login failure
         });
     }
   }
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <Loader />}{" "}
+      {/* Displaying a loader if the 'loading' state is true */}
       <div className="h-100 d-flex justify-content-center  align-items-center ">
         <div className="mx-2">
           <div className="title text-center">
@@ -61,21 +65,13 @@ export const LoginForm = (props) => {
             <p className="text-center formpara">Sing In</p>
           </div>
 
+          {/* Input field for email */}
           <TextField
             margin="normal"
             className="my-3 mt-0"
             fullWidth
             value={loginDetails.email}
             type={"email"}
-            InputProps={{
-              inputProps: {
-                maxLength: 100,
-              },
-              onInput: (e) => {
-                // enforce the maximum length
-                e.target.value = e.target.value.slice(0, 100);
-              },
-            }}
             label={"Enter Registered Email*"}
             onChange={(e) => {
               setLoginDetails({
@@ -87,31 +83,13 @@ export const LoginForm = (props) => {
             helperText={error.email}
           />
 
+          {/* Input field for password */}
           <TextField
             margin="normal"
             className="my-3 mt-0"
             fullWidth
             value={loginDetails.password}
             type={showpassword ? "text" : "password"}
-            InputProps={{
-              inputProps: {
-                maxLength: 20,
-              },
-              onInput: (e) => {
-                // enforce the maximum length
-                e.target.value = e.target.value.slice(0, 20);
-              },
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={() => setShowpassword(!showpassword)}
-                  >
-                    {showpassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
             label={"Password*"}
             onChange={(e) => {
               setLoginDetails({
@@ -121,8 +99,22 @@ export const LoginForm = (props) => {
             }}
             error={error.password ? true : false}
             helperText={error.password}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {/* Password visibility toggle button */}
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowpassword(!showpassword)}
+                  >
+                    {showpassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
+          {/* Button to submit the form */}
           <GButton
             label="Next"
             variant="standard"
@@ -133,7 +125,7 @@ export const LoginForm = (props) => {
           />
 
           <h5 className="text-center mt-2 my-2 formfoot1">
-            Don't have user ?{" "}
+            Don't have user ? {/* Link to the signup page */}
             <Link to="/signup" className="text-decoration-none formfoot2">
               Signup
             </Link>{" "}
@@ -145,19 +137,26 @@ export const LoginForm = (props) => {
 };
 
 export default function Login() {
+  // Retrieve the 'common' state from the Redux store
   const common = useSelector((state) => state.common);
+
+  // Parse the session expiration time using the DATE_FORMAT constant
   const tokenExpireTime = moment(common.sessionExpireTime, DATE_FORMAT);
 
+  // Check if the user is logged in and the token has not expired
   if (common.isLoggedIn && !tokenExpireTime.isBefore(moment())) {
+    // Redirect the user to the home page if logged in and token is valid
     return <Navigate to="/" />;
   }
 
+  // Render the login form if the user is not logged in or token has expired
   return (
     <>
       <section className="login-section">
         <div className="row w-100 h-100  m-0">
           <div className="col-md-6 mx-auto d-flex align-items-center ">
             <div className="loginForm position-relative h-75 m-auto rounded">
+              {/* Define routes for login related components */}
               <Routes>
                 <Route index element={<LoginForm />} />
               </Routes>

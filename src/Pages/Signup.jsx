@@ -298,9 +298,6 @@ export const SignupForm = () => {
 };
 
 export default function Signup() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
   return (
     <>
       <section className="login-section">
@@ -309,6 +306,7 @@ export default function Signup() {
             <div className="loginForm  position-relative h-75 m-auto rounded">
               <div className="text-center"> </div>
 
+              {/* Title */}
               <h4
                 className="text-center text-md-left"
                 style={{
@@ -319,6 +317,7 @@ export default function Signup() {
               >
                 "Welcome to Website-Learners"
               </h4>
+              {/* Description */}
               <p
                 className="text-center text-md-left"
                 style={{ color: "#52575e" }}
@@ -326,10 +325,12 @@ export default function Signup() {
                 "Post your thoughts"
               </p>
 
+              {/* SignupForm Component */}
               <Routes>
                 <Route path={`/`} element={<SignupForm />} />
               </Routes>
 
+              {/* Login link */}
               <h5 style={{ fontWeight: "700" }} className="text-center my-3">
                 Already a user ?{" "}
                 <Link

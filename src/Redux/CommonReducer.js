@@ -5,6 +5,7 @@ import { AdminServices } from "../Services/Services";
 import errorHandling from "../Services/errorHandling";
 import { customEncode } from "../Services/helpers";
 
+// Async thunk for initializing the session
 export const initializeSession = createAsyncThunk(
   "initializeSession",
   async () => {
@@ -12,6 +13,7 @@ export const initializeSession = createAsyncThunk(
   }
 );
 
+// Async thunk for getting blogs
 export const getBlogs = createAsyncThunk("blogs/get", async () => {
   try {
     return await AdminServices("get", "blogs/get", null, null);
@@ -20,6 +22,7 @@ export const getBlogs = createAsyncThunk("blogs/get", async () => {
   }
 });
 
+// Async thunk for managing blogs
 export const blogManager = createAsyncThunk("blogs/manager", async (value) => {
   try {
     return await AdminServices(
@@ -33,6 +36,7 @@ export const blogManager = createAsyncThunk("blogs/manager", async (value) => {
   }
 });
 
+// Async thunk for getting comments
 export const getComments = createAsyncThunk(
   "blogs/getComments",
   async (value) => {
@@ -44,17 +48,24 @@ export const getComments = createAsyncThunk(
   }
 );
 
+// Async thunk for updating comments
 export const updateComment = createAsyncThunk(
   "blogs/comments",
   async (value) => {
     try {
-      return await AdminServices("post", "blogs/comment", value, null);
+      return await AdminServices(
+        value?.method,
+        "blogs/comment",
+        value?.data,
+        null
+      );
     } catch (err) {
       throw new Error(errorHandling(err));
     }
   }
 );
 
+// Async thunk for updating the user profile
 export const updateUserProfile = createAsyncThunk(
   "common/updateUser",
   async (value) => {
@@ -66,6 +77,7 @@ export const updateUserProfile = createAsyncThunk(
   }
 );
 
+// Initial state for the common slice
 const initialState = {
   isLoggedIn: false,
   userProfile: null,
@@ -75,6 +87,7 @@ const initialState = {
   loading: false,
 };
 
+// Create the common slice
 export const CommonSlice = createSlice({
   name: "common",
   initialState,
@@ -84,6 +97,7 @@ export const CommonSlice = createSlice({
     },
   },
   extraReducers(builder) {
+    // Reducer for the fulfilled state of the initializeSession async thunk
     builder.addCase(initializeSession.fulfilled, (state, action) => {
       if (action.payload) {
         state.userProfile = action.payload.user;
@@ -92,6 +106,7 @@ export const CommonSlice = createSlice({
       }
     });
 
+    // Reducer for the fulfilled state of the login async thunk
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload) {
         state.userProfile = action.payload.user;
@@ -99,56 +114,74 @@ export const CommonSlice = createSlice({
       }
     });
 
+    // Reducer for the pending state of the blogManager async thunk
     builder.addCase(blogManager.pending, (state, action) => {
       state.loading = true;
     });
 
+    // Reducer for the fulfilled state of the blogManager async thunk
     builder.addCase(blogManager.fulfilled, (state, action) => {
       state.loading = false;
     });
+
+    // Reducer for the rejected state of the blogManager async thunk
     builder.addCase(blogManager.rejected, (state, action) => {
       state.loading = false;
     });
 
+    // Reducer for the pending state of the getBlogs async thunk
     builder.addCase(getBlogs.pending, (state, action) => {
       state.loading = true;
     });
 
+    // Reducer for the fulfilled state of the getBlogs async thunk
     builder.addCase(getBlogs.fulfilled, (state, action) => {
       state.blogList = action.payload;
       state.loading = false;
     });
+
+    // Reducer for the rejected state of the getBlogs async thunk
     builder.addCase(getBlogs.rejected, (state, action) => {
       state.loading = false;
     });
 
+    // Reducer for the pending state of the updateComment async thunk
     builder.addCase(updateComment.pending, (state, action) => {
       state.loading = true;
     });
 
+    // Reducer for the fulfilled state of the updateComment async thunk
     builder.addCase(updateComment.fulfilled, (state, action) => {
       state.loading = false;
     });
+
+    // Reducer for the rejected state of the updateComment async thunk
     builder.addCase(updateComment.rejected, (state, action) => {
       state.loading = false;
     });
 
+    // Reducer for the pending state of the getComments async thunk
     builder.addCase(getComments.pending, (state, action) => {
       state.loading = true;
     });
 
+    // Reducer for the fulfilled state of the getComments async thunk
     builder.addCase(getComments.fulfilled, (state, action) => {
       state.comments = action.payload;
       state.loading = false;
     });
+
+    // Reducer for the rejected state of the getComments async thunk
     builder.addCase(getComments.rejected, (state, action) => {
       state.loading = false;
     });
 
+    // Reducer for the rejected state of the login async thunk
     builder.addCase(login.rejected, (state, action) => {
       state.isLoggedIn = false;
     });
 
+    // Reducer for the fulfilled state of the logout async thunk
     builder.addCase(logout.fulfilled, (state, action) => {
       state.isLoggedIn = false;
       state.userProfile = null;

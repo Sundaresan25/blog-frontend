@@ -1,5 +1,12 @@
 import moment from "moment";
 
+/**
+ * Paginates an array of items.
+ * @param {Array} items - The array of items to paginate.
+ * @param {number} current_page - The current page number.
+ * @param {number} per_page_items - The number of items per page.
+ * @returns {Object} - The paginated result containing page information and data.
+ */
 export function paginator(items, current_page, per_page_items) {
   let page = current_page || 1,
     per_page = per_page_items,
@@ -18,6 +25,11 @@ export function paginator(items, current_page, per_page_items) {
   };
 }
 
+/**
+ * Custom encode a string by shifting each character code by 3.
+ * @param {string} str - The string to encode.
+ * @returns {string} - The encoded string.
+ */
 export function customEncode(str) {
   let result = "";
   for (let i = 0; i < str.length; i++) {
@@ -27,6 +39,11 @@ export function customEncode(str) {
   return result;
 }
 
+/**
+ * Custom decode a string by shifting each character code back by 3.
+ * @param {string} str - The string to decode.
+ * @returns {string} - The decoded string.
+ */
 export function customDecode(str) {
   let result = "";
   for (let i = 0; i < str.length; i++) {
@@ -37,6 +54,11 @@ export function customDecode(str) {
   return result;
 }
 
+/**
+ * Formats a date and time string.
+ * @param {string} dateTimeString - The date and time string to format.
+ * @returns {string} - The formatted date and time string.
+ */
 export function formatDate(dateTimeString) {
   const formattedDateTime = moment(dateTimeString).format(
     "MMMM Do, YYYY [at] h:mm:ss A"

@@ -5,6 +5,7 @@ import { customDecode, customEncode } from "./helpers";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 export const DATE_FORMAT = "YYYY-MM-DD hh:mm:ss A";
 
+// Retrieves the user profile from local storage
 export async function getUserProfie() {
   const token = localStorage.getItem("token");
   const tokenExpiresAt = localStorage.getItem("tokenExpiresAt");
@@ -38,6 +39,7 @@ export async function getUserProfie() {
   };
 }
 
+// Initializes the user session with the provided token, expiration time, and user profile
 export async function initSession({ token, expires_in, user_profile }) {
   const tokenExpiresAt = moment(expires_in).format(DATE_FORMAT);
   localStorage.setItem("token", token);
@@ -46,6 +48,7 @@ export async function initSession({ token, expires_in, user_profile }) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
+// Logs in the user by sending a login request and initializing the session
 export async function login(values) {
   const { headers, data } = await axios.post(`${baseUrl}/auth/login`, values);
   const accessToken = headers["access_token"];
@@ -64,7 +67,9 @@ export async function login(values) {
   };
 }
 
+// Logs out the user by clearing local storage and removing the Authorization header
 export async function logout() {
+  // Commented out the code related to logout API endpoint
   // try {
   //   await axios.post(`${baseUrl}/authentication/logout/`);
   // } catch (err) {

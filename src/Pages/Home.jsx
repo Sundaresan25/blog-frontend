@@ -68,6 +68,7 @@ export function OurBlogs() {
             label="Add Blogs"
             error={error}
             onSubmitHandler={(value) => {
+              // dispatch to add blog
               dispatch(blogManager(value))
                 .unwrap()
                 .then((res) => {
@@ -90,6 +91,7 @@ export function OurBlogs() {
             label="Edit Blogs"
             data={data}
             onSubmitHandler={(value) => {
+              // dispatch to update blog
               dispatch(blogManager(value))
                 .unwrap()
                 .then((res) => {
@@ -111,6 +113,7 @@ export function OurBlogs() {
             }}
             id={id}
             onSubmitHandler={(value) => {
+              // dispatch to delete blog
               dispatch(blogManager(value))
                 .unwrap()
                 .then((res) => {
@@ -179,7 +182,7 @@ export function OurBlogs() {
                   }
                 >
                   <ListItemAvatar>
-                    <Avatar>{/* <FolderIcon /> */}</Avatar>
+                    <Avatar></Avatar>
                   </ListItemAvatar>
                   <ListItemText
                     primary={item?.title}
@@ -204,17 +207,18 @@ export function Blogs() {
 
   const [blogsList, setBlogsList] = useState([]);
 
-  const [page, setPage] = useState(1);
-
   const [fullData, setFullData] = useState({});
   const [fullView, setFullView] = useState(false);
-  const [commentData, setCommentData] = useState("");
+  const [commentMode, setCommentMode] = useState("Add");
+  const [commentData, setCommentData] = useState({});
 
   useEffect(() => {
+    // get blogs by dispatch
     dispatch(getBlogs());
   }, []);
 
   useEffect(() => {
+    //update local state from blogList
     setBlogsList([...blogList]);
   }, [blogList]);
 
@@ -253,21 +257,63 @@ export function Blogs() {
             <div className="border-top">
               <h6>Comments</h6>
               {comments?.map((details) => (
-                <div key={details?._id}>
-                  <p className="mb-0">{details?.content}</p>
-                  <small className="text-muted d-flex align-items-center mt-0">
-                    <SupervisedUserCircleSharp />{" "}
-                    {details?.authorMail === userProfile?.email
-                      ? "You"
-                      : details?.author}{" "}
-                    ({formatDate(details?.created_at)})
-                  </small>
+                <div
+                  key={details?._id}
+                  className="d-flex justify-content-between align-items-center border-bottom"
+                >
+                  <div>
+                    <p className="mb-0">{details?.content}</p>
+                    <small className="text-muted d-flex align-items-center mt-0">
+                      <SupervisedUserCircleSharp />{" "}
+                      {details?.authorMail === userProfile?.email
+                        ? "You"
+                        : details?.author}{" "}
+                      ({formatDate(details?.created_at)})
+                    </small>
+                  </div>
+                  <div>
+                    <EditIcon
+                      onClick={() => {
+                        setCommentMode("Edit");
+                        setCommentData(details);
+                      }}
+                    />
+                    <DeleteIcon
+                      onClick={() => {
+                        // dispatch to delete comment
+                        dispatch(
+                          updateComment({
+                            data: {
+                              id: details._id,
+                            },
+                            method: "delete",
+                          })
+                        )
+                          .unwrap()
+                          .then((res) => {
+                            dispatch(getComments(fullData?._id));
+                            toast.success("Delete Successfully");
+                          })
+                          .catch((error) => {
+                            toast.error(error.message);
+                          });
+                      }}
+                    />
+                  </div>
                 </div>
               ))}
-              <h6 className="mt-3">Leave a comment</h6>
+              <h6 className="mt-3">
+                {commentMode === "Add" ? " Leave a comment" : "Edit Comment"}
+              </h6>
               <input
                 className="form-control"
-                onChange={(e) => setCommentData(e.target.value)}
+                value={commentData?.content}
+                onChange={(e) =>
+                  setCommentData({
+                    ...commentData,
+                    content: e.target.value,
+                  })
+                }
               />
               <button
                 className="btn mt-2"
@@ -275,17 +321,22 @@ export function Blogs() {
                   if (commentData.length === 0) {
                     toast.error("Empty Value");
                   } else {
+                    // dispatch to add/update comment
                     dispatch(
                       updateComment({
-                        content: commentData,
-                        blogId: fullData._id,
-                        author: userProfile?.name,
-                        authorMail: userProfile?.email,
+                        data: {
+                          ...commentData,
+                          blogId: fullData._id,
+                          author: userProfile?.name,
+                          authorMail: userProfile?.email,
+                        },
+                        method: commentMode === "Add" ? "post" : "put",
                       })
                     )
                       .unwrap()
                       .then((res) => {
-                        setCommentData("");
+                        setCommentData({ content: "" });
+                        setCommentMode("Add");
                         dispatch(getComments(fullData?._id));
                         toast.success("Added Successfully");
                       })
@@ -297,6 +348,17 @@ export function Blogs() {
               >
                 Submit
               </button>
+              {commentMode === "Edit" && (
+                <button
+                  className="btn mt-2"
+                  onClick={() => {
+                    setCommentData({ content: "" });
+                    setCommentMode("Add");
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -332,11 +394,16 @@ export function Blogs() {
 export function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Retrieve the 'common' state from the Redux store
   const common = useSelector((state) => state.common);
 
+  // Parse the session expiration time using the DATE_FORMAT constant
   const tokenExpireTime = moment(common.sessionExpireTime, DATE_FORMAT);
 
+  // Check if the user is logged in and the token has not expired
   if (!common.isLoggedIn || tokenExpireTime.isBefore(moment())) {
+    // Redirect the user to the home page if logged in and token is valid
     return <Navigate to="/login" />;
   }
 

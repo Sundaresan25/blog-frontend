@@ -9,7 +9,6 @@ export const Loader = () => {
           className="modalBox bg-white col-lg-2 col-md-4 col-10 text-center rounded p-2"
           style={{ zIndex: 999999 }}
         >
-          {/* <LoadingIcon className="loadingIcon" /> */}
           <Typography variant="h6">Page Loading</Typography>
           <Typography variant="subtitle2">
             {" "}
@@ -17,6 +16,7 @@ export const Loader = () => {
           </Typography>{" "}
           *
         </div>
+        {/* Comment line: This component is used to display a loading screen with a message */}
       </div>
     </section>
   );
