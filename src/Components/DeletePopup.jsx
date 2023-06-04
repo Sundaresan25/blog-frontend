@@ -46,7 +46,7 @@ export default function DeletePopup(props) {
                 borderRadius: "10px",
               }}
               variant="contained"
-              className=" mt-3 "
+              className="mt-3 mx-0"
               onClick={onClickHandler}
             >
               Cancel
@@ -61,7 +61,7 @@ export default function DeletePopup(props) {
                 marginLeft: "20px",
               }}
               variant="contained"
-              className=" mt-3 "
+              className="mt-3 mx-0"
               onClick={() => {
                 let updatedData = {
                   data: {
